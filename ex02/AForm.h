@@ -1,20 +1,23 @@
 #ifndef FORM_H
 # define FORM_H
+#include <exception>
 #include <string>
 #include "Bureaucrat.h"
 
-class Form
+class AForm
 {
 public:
-	Form(std::string name, int grade);
-	Form(std::string name, int gradeToSign, int gradeToExcute);
-	Form(const Form& other);
-	~Form();
+	AForm(std::string name, int grade);
+	AForm(std::string name, int gradeToSign, int gradeToExcute);
+	AForm(const AForm& other);
+	virtual ~AForm();
 
 	std::string getName() const;
 	int getGradeToSign() const;
 	int getGradeToExcute() const;
+	bool isSigned() const;
 	void beSigned(Bureaucrat& b);
+	virtual void excute(Bureaucrat const & excutor) const = 0;
 
 	static const int HIGHEST_GRADE = Bureaucrat::HIGHEST_GRADE;
 	static const int LOWEST_GRADE = Bureaucrat::LOWEST_GRADE;
@@ -31,9 +34,15 @@ public:
 	const char* what() const throw();
 };
 
+class ExecuteUnsignedForm: public std::exception
+{
+public:
+	const char* what() const throw();
+};
+
 private:
-	Form();
-	Form& operator=(const Form& rhs);
+	AForm();
+	AForm& operator=(const AForm& rhs);
 
 	const std::string mName;
 	bool mIsSigned;
@@ -41,5 +50,5 @@ private:
 	const int mGradeToExcute;
 };
 
-std::ostream& operator<<(std::ostream& os, const Form& bureaucrat);
+std::ostream& operator<<(std::ostream& os, const AForm& bureaucrat);
 #endif //FORM_H

@@ -1,6 +1,6 @@
-#include "Form.h"
+#include "AForm.h"
 
-Form::Form(std::string name, int grade)
+AForm::AForm(std::string name, int grade)
 	:mName(name), mIsSigned(false), mGradeToSign(grade), mGradeToExcute(grade)
 {
 	if (grade < HIGHEST_GRADE)
@@ -9,7 +9,7 @@ Form::Form(std::string name, int grade)
 		throw GradeTooLowException();
 }
 
-Form::Form(std::string name, int gradeToSign, int gradeToExcute)
+AForm::AForm(std::string name, int gradeToSign, int gradeToExcute)
 	:mName(name),
 	mIsSigned(false),
 	mGradeToSign(gradeToSign),
@@ -25,7 +25,7 @@ Form::Form(std::string name, int gradeToSign, int gradeToExcute)
 		throw GradeTooLowException();
 }
 
-Form::Form(const Form& other)
+AForm::AForm(const AForm& other)
 	:mName(other.getName()),
 	mIsSigned(other.mIsSigned),
 	mGradeToSign(other.mGradeToSign),
@@ -33,20 +33,25 @@ Form::Form(const Form& other)
 {
 }
 
-Form::~Form()
+AForm::~AForm()
 {}
 
-const char* Form::GradeTooHighException::what() const throw()
+const char* AForm::GradeTooHighException::what() const throw()
 {
-	return "Form grade too high exception";
+	return "AForm grade too high exception";
 }
 
-const char* Form::GradeTooLowException::what() const throw()
+const char* AForm::GradeTooLowException::what() const throw()
 {
-	return "Form grade too low exception";
+	return "AForm grade too low exception";
 }
 
-void Form::beSigned(Bureaucrat &b)
+const char* AForm::ExecuteUnsignedForm::what() const throw()
+{
+	return "AForm grade too low exception";
+}
+
+void AForm::beSigned(Bureaucrat &b)
 {
 	if (b.getGrade() <= mGradeToSign)
 		mIsSigned = true;
@@ -54,22 +59,27 @@ void Form::beSigned(Bureaucrat &b)
 		throw GradeTooLowException();
 }
 
-std::string Form::getName() const
+std::string AForm::getName() const
 {
 	return mName;
 }
 
-int Form::getGradeToExcute() const
+int AForm::getGradeToExcute() const
 {
 	return mGradeToExcute;
 }
 
-int Form::getGradeToSign() const
+int AForm::getGradeToSign() const
 {
 	return mGradeToSign;
 }
 
-std::ostream& operator<<(std::ostream& os, const Form& form)
+bool AForm::isSigned() const
+{
+	return mIsSigned;
+}
+
+std::ostream& operator<<(std::ostream& os, const AForm& form)
 {
 	os << form.getName() << ", grade to sign: " << form.getGradeToSign() << ", grade to excute: " << form.getGradeToExcute();
 	return os;

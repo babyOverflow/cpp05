@@ -1,5 +1,5 @@
 #include "Bureaucrat.h"
-#include "Form.h"
+#include "AForm.h"
 #include <ostream>
 #include <iostream>
 
@@ -29,18 +29,37 @@ Bureaucrat::Bureaucrat(const Bureaucrat& other)
 {
 }
 
-void Bureaucrat::signForm(Form& f)
+void Bureaucrat::signForm(AForm& f)
 {
 	try
 	{
 		f.beSigned(*this);
 		std::cout << "Bureaucrat " << mName << " signed From " << f.getName() << std::endl;
 	}
-	catch (Form::GradeTooLowException &e)
+	catch (AForm::GradeTooLowException &e)
 	{
 		std::cout << "Bureaucrat " << mName << " couldn't sign From " << f.getName() << " because "
 			<< mName << "'s grade is too low to sign" << std::endl;
 	}
+}
+
+void Bureaucrat::executeForm(AForm const & f)
+{	
+	try
+	{
+		f.excute(*this);
+		std::cout << "Bureaucrat " << mName << " signed From " << f.getName() << std::endl;
+	}
+	catch (AForm::GradeTooLowException &e)
+	{
+		std::cout << "Bureaucrat " << mName << " couldn't excute From " << f.getName() << " because "
+			<< mName << "'s grade is too low to execute" << std::endl;
+	}
+	catch (AForm::ExecuteUnsignedForm &e)
+	{
+		std::cout << "Bureaucrat " << mName << " tried to execute an unsigned From " << f.getName() << std::endl;
+	}
+
 }
 
 std::string Bureaucrat::getName() const

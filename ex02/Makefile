@@ -5,7 +5,10 @@ CFLAG := -Wall -Wextra -Werror
 
 SRC := main.cpp \
 	Bureaucrat.cpp \
-	Form.cpp
+	AForm.cpp \
+	ShrubberyCreationForm.cpp \
+	RobotomyRequestForm.cpp \
+	PresidentialPardonForm.cpp
 
 
 $(NAME): $(SRC)
