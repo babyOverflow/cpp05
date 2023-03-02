@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Intern.h"
 
 Intern::Intern()
@@ -56,5 +57,10 @@ AForm* Intern::makeForm(std::string name, std::string target)
 			return makers[i].maker(target);
 	}
 
-	return NULL;
+	throw NotFoundForm();
+}
+
+const char* Intern::NotFoundForm::what() const throw()
+{
+	return "Not found form";
 }
