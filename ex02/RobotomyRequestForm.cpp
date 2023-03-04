@@ -35,10 +35,15 @@ void RobotomyRequestForm::excute(const Bureaucrat &excutor) const
 	}
 	else
 	{
-		float f = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
-		if (f < 0.5)
+		std::cout << "Drilllllll~~" << std::endl;
+		if (std::rand() % 2)
 		{
-			std::cout << "Drilllllll~~" << ++count << std::endl;
+			std::cout << "Success to robotomized " << mTarget << ", successed " << ++count << "times" << std::endl;
+		}
+		else
+		{
+		
+			std::cout << "Fail" << std::endl;
 		}
 	}
 }
